@@ -1,0 +1,2 @@
+az acr credential show --name assignmentContainerReg
+az container create --resource-group RG --name assignmentContainerInstance --image assignmentcontainerreg.azurecr.io/react-and-spring-data-rest:latest --dns-name-label hello-spring-docker-azure --ports 8080

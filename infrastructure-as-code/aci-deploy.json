@@ -1,0 +1,64 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "containerGroups_assignmentcontainerinstance_name": {
+            "defaultValue": "assignmentcontainerinstance",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.ContainerInstance/containerGroups",
+            "apiVersion": "2021-10-01",
+            "name": "[parameters('containerGroups_assignmentcontainerinstance_name')]",
+            "location": "centralindia",
+            "properties": {
+                "sku": "Standard",
+                "containers": [
+                    {
+                        "name": "[parameters('containerGroups_assignmentcontainerinstance_name')]",
+                        "properties": {
+                            "image": "assignmentcontainerreg.azurecr.io/react-and-spring-data-rest:latest",
+                            "ports": [
+                                {
+                                    "protocol": "TCP",
+                                    "port": 8080
+                                }
+                            ],
+                            "environmentVariables": [],
+                            "resources": {
+                                "requests": {
+                                    "memoryInGB": 1.5,
+                                    "cpu": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "initContainers": [],
+                "imageRegistryCredentials": [
+                    {
+                        "server": "assignmentcontainerreg.azurecr.io",
+                        "username": "assignmentContainerReg"
+                    }
+                ],
+                "restartPolicy": "Always",
+                "ipAddress": {
+                    "ports": [
+                        {
+                            "protocol": "TCP",
+                            "port": 8080
+                        }
+                    ],
+                    "ip": "20.207.111.122",
+                    "type": "Public",
+                    "dnsNameLabel": "hello-spring-docker-azure",
+                    "dnsNameLabelReusePolicy": "Unsecure"
+                },
+                "osType": "Linux"
+            }
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubexc-deployment
+  labels:
+    app: kubexc-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kubexc
+  template:
+    metadata:
+      labels:
+        app: kubexc
+    spec:
+      containers:
+      - name: react-and-spring-data-rest
+        image: assignmentcontainerreg.azurecr.io/react-and-spring-data-rest
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubexc-deployment
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: kubexc-deployment
